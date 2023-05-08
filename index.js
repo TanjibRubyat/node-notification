@@ -47,18 +47,14 @@ io.on("connection", (socket) => {
     axios
       .get(`https://crmuser.quadque.digital/api/user-details-socket/${id}`)
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         let results = response.data.data;
         // console.log(JSON.stringify(results));
         //   exit()
         for (let i = 0; i < results.length; i++) {
-          //   console.log(results.data[i].start);
           var date = results[i].start;
-          //   console.log(date);
           var today = new Date();
           var date = new Date(date);
-          //   console.log(today);
-          //   console.log(date);
           var today_date =
             today.getFullYear() +
             "-" +
@@ -71,15 +67,13 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          console.log(today_date);
-          console.log(date_from_db);
+        
           if (today_date == date_from_db) {
             if (
               today < new Date(date) &&
               today > new Date(date.setMinutes(date.getMinutes() - 10))
             ) {
               time.push(results[i]);
-              // console.log(msg);
             }
           }
         }
