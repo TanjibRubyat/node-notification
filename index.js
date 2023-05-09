@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
             }
           }
         }
-        io.emit("message", time);
+        io.emit("message", "time");
       });
   });
 });
