@@ -81,8 +81,8 @@ io.on("connection", (socket) => {
 
 //////////////////////////// socket.io notification end//////////////////////////
 
-app.use("/api", router);
+// app.use("/api", router);
 
-server.listen(5000, () => {
-  console.log("listening on *: http://localhost:5000");
+server.listen(3306, () => {
+  console.log("listening on *: http://localhost:3306");
 });
