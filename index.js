@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
             }
           }
         }
-        io.emit("message", time);
+        io.sockets.emit("message", time);
       });
   });
 });
@@ -84,6 +84,6 @@ io.on("connection", (socket) => {
 
 // app.use("/api", router);
 
-server.listen(3306, () => {
-  console.log("listening on *: http://localhost:3306");
+server.listen(5000, () => {
+  console.log("listening on *: http://localhost:5000");
 });
