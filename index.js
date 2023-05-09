@@ -48,10 +48,7 @@ io.on("connection", (socket) => {
       .get(`https://crmuser.quadque.digital/api/user-details-socket/${id}`)
       // .get(`http://localhost:8000/api/user-details-socket/${id}`)
       .then((response) => {
-        // console.log(response.data.data);
         let results = response.data.data;
-        // console.log(JSON.stringify(results));
-        //   exit()
         for (let i = 0; i < results.length; i++) {
           var date = results[i].start;
           var today = new Date();
@@ -62,7 +59,6 @@ io.on("connection", (socket) => {
             (today.getMonth() + 1) +
             "-" +
             today.getDate();
-          // console.log(today_date)
           var date_from_db =
             date.getFullYear() +
             "-" +
@@ -71,8 +67,6 @@ io.on("connection", (socket) => {
             date.getDate();
           
           if (today_date == date_from_db) {
-            // console.log(today);
-            // console.log(new Date(date));
             if (today < new Date(date) && today > new Date(date.setMinutes(date.getMinutes() - 10))
             ) {
               
@@ -80,7 +74,6 @@ io.on("connection", (socket) => {
             }
           }
         }
-        // console.log(time)
         io.emit("message", time);
       });
   });
