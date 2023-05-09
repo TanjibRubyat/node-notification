@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-        
+
           if (today_date == date_from_db) {
             if (
               today < new Date(date) &&
