@@ -46,6 +46,7 @@ io.on("connection", (socket) => {
     const options = { timeZone: "Asia/Dhaka", timeZoneName: "short" };
     axios
       .get(`https://crmuser.quadque.digital/api/user-details-socket/${id}`)
+      // .get(`http://localhost:8000/api/user-details-socket/${id}`)
       .then((response) => {
         // console.log(response.data.data);
         let results = response.data.data;
@@ -61,22 +62,25 @@ io.on("connection", (socket) => {
             (today.getMonth() + 1) +
             "-" +
             today.getDate();
+          // console.log(today_date)
           var date_from_db =
             date.getFullYear() +
             "-" +
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-
+          
           if (today_date == date_from_db) {
-            if (
-              today < new Date(date) &&
-              today > new Date(date.setMinutes(date.getMinutes() - 10))
+            // console.log(today);
+            // console.log(new Date(date));
+            if (today < new Date(date) && today > new Date(date.setMinutes(date.getMinutes() - 10))
             ) {
+              
               time.push(results[i]);
             }
           }
         }
+        // console.log(time)
         io.emit("message", time);
       });
   });
