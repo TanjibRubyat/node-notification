@@ -71,10 +71,11 @@ io.on("connection", (socket) => {
             ) {
               
               time.push(results[i]);
+              io.emit("message", time);
             }
           }
         }
-        io.emit("message", "time");
+        
       });
   });
 });
