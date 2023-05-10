@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected", socket.id);
+  console.log("Connected", socket?.id);
   socket.on("message", (msg) => {
     console.log("msg", msg.user_id);
 
@@ -51,12 +51,14 @@ io.on("connection", (socket) => {
         let results = response.data.data;
         for (let i = 0; i < results.length; i++) {
           var date = results[i].start;
-          var today = new Date();
+          var today = new Date().toLocaleString();
+          
+          
           var date = new Date(date);
-          var offset = date.toUTCString();
-          console.log("today", today);
-          console.log("today date", date.toTimeString());
-
+          today = new Date(today);
+          // var utc = date.toISOString();
+          console.log(date);
+          // exit()
           var today_date =
             today.getFullYear() +
             "-" +
@@ -69,18 +71,17 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          // var utc_time = date.getTime() - offset * 60000;
+          
           if (today_date == date_from_db) {
             if (
-              today < new Date(offset) &&
-              // today.toTimeString() < date.toTimeString() &&
-              today > new Date(offset.setMinutes(offset.getMinutes() - 10))
+              today < new Date(date) &&
+              today > new Date(date.setMinutes(date.getMinutes() - 10))
             ) {
               time.push(results[i]);
             }
           }
         }
-        io.sockets.emit("message", time);
+        io.emit("message", time);
       });
   });
 });
