@@ -9,7 +9,6 @@ const cron = require("node-cron");
 const axios = require("axios");
 const path = require("path");
 const router = require("./src/router/router");
-const moment = require("moment");
 // const { exit } = require("process");
 const cors = require("cors");
 const { exit } = require("process");
@@ -53,48 +52,45 @@ io.on("connection", (socket) => {
         for (let i = 0; i < results.length; i++) {
           var date = results[i].start;
           var today = new Date();
-          // console.log(today);
-          // var date = new Date(date);
-          var now = new Date();
-          console.log(date);
-          var dur = moment.duration({ from: now, to: date });
 
-          console.log("In MIn", dur.asMinutes());
-          if (dur.asMinutes() > 0 && dur.asMinutes() < 10) {
-            time.push(results[i]);
-          }
+          var date = new Date(date);
+
           // today = new Date(today);
           // var utc = date.toISOString();
-          // console.log(date);
-          // console.log(today);
+          console.log(date);
+          console.log(today);
 
           // exit()
-          // var today_date =
-          //   today.getFullYear() +
-          //   "-" +
-          //   (today.getMonth() + 1) +
-          //   "-" +
-          //   today.getDate();
-          // var date_from_db =
-          //   date.getFullYear() +
-          //   "-" +
-          //   (date.getMonth() + 1) +
-          //   "-" +
-          //   date.getDate();
-          // var date_time = new Date(date).toLocaleString();
-          // if (today_date == date_from_db) {
-          //   if (
-          //     // today < new Date(date) &&
-          //     // today > new Date(date.setMinutes(date.getMinutes() - 10))
-          //     // (new Date('2023-05-10 10:55:00').toLocaleTimeString() > new Date().toLocaleTimeString())
-          //     // && (new Date(1683693900000).toLocaleTimeString() < new Date().toLocaleTimeString())
-
-          //     new Date(date) > new Date() &&
-          //     new Date(date.setMinutes(date.getMinutes() - 10)) < new Date()
-          //   ) {
-          //     time.push(results[i]);
-          //   }
+          var today_date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
+          var date_from_db =
+            date.getFullYear() +
+            "-" +
+            (date.getMonth() + 1) +
+            "-" +
+            date.getDate();
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          // if (timezone == "Asia/Dhaka") {
+            console.log(timezone)
           // }
+            if (today_date == date_from_db) {
+              // var date_time = new Date(date).toLocaleString();
+              if (
+                // today < new Date(date) &&
+                // today > new Date(date.setMinutes(date.getMinutes() - 10))
+                // (new Date('2023-05-10 10:55:00').toLocaleTimeString() > new Date().toLocaleTimeString())
+                // && (new Date(1683693900000).toLocaleTimeString() < new Date().toLocaleTimeString())
+
+                new Date(date) > new Date() &&
+                new Date(date.setMinutes(date.getMinutes() - 10)) < new Date()
+              ) {
+                time.push(results[i]);
+              }
+            }
         }
         io.emit("message", time);
       });
