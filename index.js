@@ -53,6 +53,7 @@ io.on("connection", (socket) => {
           var date = results[i].start;
           var today = new Date();
           var date = new Date(date);
+          var offset = date.getTimezoneOffset();
           console.log("today", today);
           console.log("today date", date.toTimeString());
 
@@ -68,12 +69,12 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-
+          var utc_time = date.getTime() - offset * 60000;
           if (today_date == date_from_db) {
             if (
-              today < new Date(date) &&
+              today < new Date(utc_time) &&
               // today.toTimeString() < date.toTimeString() &&
-              today > new Date(date.setMinutes(date.getMinutes() - 10))
+              today > new Date(utc_time.setMinutes(utc_time.getMinutes() - 10))
             ) {
               time.push(results[i]);
             }
