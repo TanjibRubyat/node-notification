@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
           var date = new Date(results[i].start);
           var today = new Date();
           const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-          if (timezone == 'Asia/Dhaka') {
+          if (timezone == 'Australia/Sydney') {
             today = new Date(today.setHours(today.getHours() + 6));
             // date = new Date(date);
             date = new Date(date.setHours(date.getHours() + 6));
