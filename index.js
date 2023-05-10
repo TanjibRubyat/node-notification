@@ -52,15 +52,14 @@ io.on("connection", (socket) => {
         for (let i = 0; i < results.length; i++) {
           var date = results[i].start;
           var today = new Date();
-
+          // console.log(today)
           var date = new Date(date);
-
-          // today = new Date(today);
-          // var utc = date.toISOString();
+          var tz = today.getTimezoneOffset();
+          // var db_to_utc_date = today + tz;
+          var today_utc_date = new Date(today.getTime() + tz * 60000);
+          date = new Date(date.getTime() + tz * 60000);
           console.log(date);
-          console.log(today);
-
-          // exit()
+          console.log(today_utc_date);
           var today_date =
             today.getFullYear() +
             "-" +
@@ -81,10 +80,10 @@ io.on("connection", (socket) => {
               // (new Date('2023-05-10 10:55:00').toLocaleTimeString() > new Date().toLocaleTimeString())
               // && (new Date(1683693900000).toLocaleTimeString() < new Date().toLocaleTimeString())
 
-              new Date(date).toUTCString() > new Date().toUTCString() &&
-              new Date(date.setMinutes(date.getMinutes() - 10)).toUTCString() <
-                new Date().toUTCString()
+              date > today_utc_date &&
+              new Date(date.setMinutes(date.getMinutes() - 10)) < today_utc_date
             ) {
+              console.log("dgvdsgdfg");
               time.push(results[i]);
             }
           }
