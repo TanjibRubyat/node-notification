@@ -53,6 +53,9 @@ io.on("connection", (socket) => {
           var date = results[i].start;
           var today = new Date();
           var date = new Date(date);
+          console.log("today", today);
+          console.log("today date", date.toTimeString());
+
           var today_date =
             today.getFullYear() +
             "-" +
@@ -65,13 +68,14 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          
+
           if (today_date == date_from_db) {
-            if (today < new Date(date) && today > new Date(date.setMinutes(date.getMinutes() - 10))
+            if (
+              // today < new Date(date) &&
+              today.toTimeString() < date.toTimeString() &&
+              today > new Date(date.setMinutes(date.getMinutes() - 10))
             ) {
-              
               time.push(results[i]);
-              
             }
           }
         }
@@ -84,6 +88,6 @@ io.on("connection", (socket) => {
 
 // app.use("/api", router);
 
-server.listen(3306, () => {
-  console.log("listening on *: http://localhost:3306");
+server.listen(5000, () => {
+  console.log("listening on *: http://localhost:5000");
 });
