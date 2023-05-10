@@ -15,6 +15,8 @@ const { exit } = require("process");
 
 const app = express();
 const server = http.createServer(app);
+process.env.TZ = "Asia/Dhaka"; // UTC +00:00
+console.log(new Date());
 
 app.use(
   cors({
@@ -50,13 +52,11 @@ io.on("connection", (socket) => {
       .then((response) => {
         let results = response.data.data;
         for (let i = 0; i < results.length; i++) {
-          var date = results[i].start;
+          var date = new Date(results[i].start);
           var today = new Date();
-
-          var date = new Date(date);
-
-          // today = new Date(today);
-          // var utc = date.toISOString();
+          today = new Date(today.setHours(today.getHours() + 6));
+          // date = new Date(date);
+          date = new Date(date.setHours(date.getHours() + 6));
           console.log(date);
           console.log(today);
 
@@ -75,22 +75,17 @@ io.on("connection", (socket) => {
             date.getDate();
           const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
           // if (timezone == "Asia/Dhaka") {
-            console.log(timezone)
+          //   console.log(timezone);
           // }
-            if (today_date == date_from_db) {
-              // var date_time = new Date(date).toLocaleString();
-              if (
-                // today < new Date(date) &&
-                // today > new Date(date.setMinutes(date.getMinutes() - 10))
-                // (new Date('2023-05-10 10:55:00').toLocaleTimeString() > new Date().toLocaleTimeString())
-                // && (new Date(1683693900000).toLocaleTimeString() < new Date().toLocaleTimeString())
-
-                new Date(date) > new Date() &&
-                new Date(date.setMinutes(date.getMinutes() - 10)) < new Date()
-              ) {
-                time.push(results[i]);
-              }
+          if (today_date == date_from_db) {
+            if (
+              date > today &&
+              new Date(today.setMinutes(today.getMinutes() - 10) < today)
+            ) {
+              console.log("timezone");
+              time.push(results[i]);
             }
+          }
         }
         io.emit("message", time);
       });
