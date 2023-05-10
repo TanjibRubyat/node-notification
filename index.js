@@ -81,10 +81,9 @@ io.on("connection", (socket) => {
               // (new Date('2023-05-10 10:55:00').toLocaleTimeString() > new Date().toLocaleTimeString())
               // && (new Date(1683693900000).toLocaleTimeString() < new Date().toLocaleTimeString())
 
-              new Date(date).toLocaleString() > new Date().toLocaleString() &&
-              new Date(
-                date.setMinutes(date.getMinutes() - 10)
-              ).toLocaleString() < new Date().toLocaleString()
+              new Date(date).toUTCString() > new Date().toUTCString() &&
+              new Date(date.setMinutes(date.getMinutes() - 10)).toUTCString() <
+                new Date().toUTCString()
             ) {
               time.push(results[i]);
             }
