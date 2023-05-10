@@ -54,12 +54,14 @@ io.on("connection", (socket) => {
         for (let i = 0; i < results.length; i++) {
           var date = new Date(results[i].start);
           var today = new Date();
-          today = new Date(today.setHours(today.getHours() + 6));
-          // date = new Date(date);
-          date = new Date(date.setHours(date.getHours() + 6));
-          console.log(date);
-          console.log(today);
-
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (timezone == 'Asia/Dhaka') {
+            today = new Date(today.setHours(today.getHours() + 6));
+            // date = new Date(date);
+            date = new Date(date.setHours(date.getHours() + 6));
+            console.log(date);
+            console.log(today);
+          }       
           // exit()
           var today_date =
             today.getFullYear() +
@@ -73,7 +75,7 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          
           // if (timezone == "Asia/Dhaka") {
           //   console.log(timezone);
           // }
