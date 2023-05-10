@@ -51,13 +51,15 @@ io.on("connection", (socket) => {
         let results = response.data.data;
         for (let i = 0; i < results.length; i++) {
           var date = results[i].start;
-          var today = new Date().toLocaleString();
-          
-          
+          var today = new Date();
+
           var date = new Date(date);
-          today = new Date(today);
+
+          // today = new Date(today);
           // var utc = date.toISOString();
           console.log(date);
+          console.log(today);
+
           // exit()
           var today_date =
             today.getFullYear() +
@@ -71,11 +73,18 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          
+          // var date_time = new Date(date).toLocaleString();
           if (today_date == date_from_db) {
             if (
-              today < new Date(date) &&
-              today > new Date(date.setMinutes(date.getMinutes() - 10))
+              // today < new Date(date) &&
+              // today > new Date(date.setMinutes(date.getMinutes() - 10))
+              // (new Date('2023-05-10 10:55:00').toLocaleTimeString() > new Date().toLocaleTimeString())
+              // && (new Date(1683693900000).toLocaleTimeString() < new Date().toLocaleTimeString())
+
+              new Date(date).toLocaleString() > new Date().toLocaleString() &&
+              new Date(
+                date.setMinutes(date.getMinutes() - 10)
+              ).toLocaleString() < new Date().toLocaleString()
             ) {
               time.push(results[i]);
             }
