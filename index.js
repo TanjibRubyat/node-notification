@@ -71,8 +71,8 @@ io.on("connection", (socket) => {
 
           if (today_date == date_from_db) {
             if (
-              // today < new Date(date) &&
-              today.toTimeString() < date.toTimeString() &&
+              today < new Date(date) &&
+              // today.toTimeString() < date.toTimeString() &&
               today > new Date(date.setMinutes(date.getMinutes() - 10))
             ) {
               time.push(results[i]);
