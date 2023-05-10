@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected", socket?.id);
+  console.log("Connected", socket.id);
   socket.on("message", (msg) => {
     console.log("msg", msg.user_id);
 
@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
             }
           }
         }
-        io.emit("message", time);
+        io.sockets.emit("message", time);
       });
   });
 });
