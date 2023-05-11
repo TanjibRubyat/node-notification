@@ -88,7 +88,7 @@ io.on("connection", (socket) => {
           if (today_date == date_from_db) {
             if (
               date > today &&
-              new Date(today.setMinutes(today.getMinutes() - 10) < today)
+              new Date(date.setMinutes(date.getMinutes() - 10) < today)
             ) {
               console.log("timezone");
               time.push(results[i]);
