@@ -55,14 +55,18 @@ io.on("connection", (socket) => {
           var date = new Date(results[i].start);
           var today = new Date();
           // console.log(current_date);
-          var today_date = new Date();
-          console.log(date)
-          console.log(today);
-          var today_date_in_string = today_date.toLocaleString(
-            "en-US",
-            options
-          );
-          var time_diff = new Date().getTimezoneOffset();
+          // var today_date = new Date();
+          console.log("db_date", date);
+          console.log("to_date", today);
+
+          console.log("typeof db_date", typeof date);
+          console.log("typeof to_date", typeof today);
+
+          // var today_date_in_string = today_date.toLocaleString(
+          //   "en-US",
+          //   options
+          // );
+          // var time_diff = new Date().getTimezoneOffset();
           // const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
           // console.log(new Date(today_date_in_string));
           // date = new Date();
@@ -87,8 +91,10 @@ io.on("connection", (socket) => {
             date.getDate();
           if (today_date == date_from_db) {
             if (
-              date > today &&
-              new Date(date.setMinutes(date.getMinutes() - 10) < today)
+              new Date(results[i].start) > new Date() &&
+              new Date(results[i].start).setMinutes(
+                new Date(results[i].start).getMinutes() - 10
+              ) < new Date()
             ) {
               console.log("timezone");
               time.push(results[i]);
