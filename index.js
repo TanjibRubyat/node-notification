@@ -54,14 +54,24 @@ io.on("connection", (socket) => {
         for (let i = 0; i < results.length; i++) {
           var date = new Date(results[i].start);
           var today = new Date();
-          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-          if (timezone == 'Australia/Sydney') {
-            today = new Date(today.setHours(today.getHours() + 6));
-            // date = new Date(date);
-            date = new Date(date.setHours(date.getHours() + 6));
-            console.log(date);
-            console.log(today);
-          }       
+          // console.log(current_date);
+          var today_date = new Date();
+          console.log(date)
+          console.log(today);
+          var today_date_in_string = today_date.toLocaleString(
+            "en-US",
+            options
+          );
+          var time_diff = new Date().getTimezoneOffset();
+          // const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          // console.log(new Date(today_date_in_string));
+          // date = new Date();
+          // today = convertTZ(today, "Asia/Dhaka");
+          // today = new Date(today.setHours(today.getHours() + 6));
+          // date = new Date(date.setHours(date.getHours() + 6));
+          // console.log(date);
+          // today = ;
+          // console.log(today.toLocaleString("en-US", { timeZone: "Asia/Dhaka" }))
           // exit()
           var today_date =
             today.getFullYear() +
@@ -75,10 +85,6 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          
-          // if (timezone == "Asia/Dhaka") {
-          //   console.log(timezone);
-          // }
           if (today_date == date_from_db) {
             if (
               date > today &&
@@ -99,5 +105,5 @@ io.on("connection", (socket) => {
 // app.use("/api", router);
 
 server.listen(5000, () => {
-  console.log("listening on *: http://localhost:5000");
+  console.log("listening");
 });
