@@ -36,17 +36,21 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected", socket?.id);
+  // console.log("Connected", socket?.id);
   socket.on("message", (msg) => {
     console.log("msg", msg.user_id);
 
     var time = new Array();
     var id = msg.user_id;
     const options = { timeZone: "Asia/Dhaka", timeZoneName: "short" };
-    axios
-      .get(`https://crmuser.quadque.digital/api/user-details-socket/${id}`)
-      .then((response) => {
-        let results = response.data.data;
+    const socket_notifier = async () => {
+      try {
+        const result = await axios.get(
+          `https://crmuser.quadque.digital/api/user-details-socket/${id}`
+        );
+        const results = result.data.data;
+        console.log(results);
+        //   let results = response.data.data;
         for (let i = 0; i < results.length; i++) {
           var date = new Date(results[i].start);
           var today = new Date();
@@ -64,10 +68,10 @@ io.on("connection", (socket) => {
             date.getDate();
           if (today_date == date_from_db) {
             if (
-              new Date(results[i].start) > new Date() &&
+              new Date(results[i].start) >= new Date() &&
               new Date(results[i].start).setMinutes(
                 new Date(results[i].start).getMinutes() - 10
-              ) < new Date()
+              ) <= new Date()
             ) {
               console.log("timezone");
               time.push(results[i]);
@@ -75,12 +79,16 @@ io.on("connection", (socket) => {
           }
         }
         io.emit("message", time);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+      // });
+    };
+    socket_notifier();
   });
 });
 
 //////////////////////////// socket.io notification end//////////////////////////
-
 
 server.listen(5000, () => {
   console.log("listening");
