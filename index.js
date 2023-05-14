@@ -14,8 +14,6 @@ const { exit } = require("process");
 
 const app = express();
 const server = http.createServer(app);
-process.env.TZ = "Asia/Dhaka"; // UTC +00:00
-console.log(new Date());
 
 app.use(
   cors({
