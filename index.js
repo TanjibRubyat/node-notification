@@ -45,12 +45,12 @@ io.on("connection", (socket) => {
     // const options = { timeZone: "Asia/Dhaka", timeZoneName: "short" };
     const socket_notifier = async () => {
       try {
-        const result = await axios.get(
+        const result = await axios(
           `https://crmuser.quadque.digital/api/user-details-socket/${id}`
         );
         const results = result.data.data;
-        console.log(results);
-        //   let results = response.data.data;
+        // let results = response.data.data;
+        console.log(results)
         for (let i = 0; i < results.length; i++) {
           var date = new Date(results[i].start);
           var today = new Date();
@@ -66,7 +66,10 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
+          console.log(today_date);
+          console.log(date_from_db);
           if (today_date == date_from_db) {
+            console.log("here")
             if (
               new Date(results[i].start) >= new Date() &&
               new Date(results[i].start).setMinutes(
