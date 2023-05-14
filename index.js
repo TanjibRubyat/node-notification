@@ -1,10 +1,10 @@
 const express = require("express");
 const http = require("http");
-const { createConnection } = require("mysql");
+// const { createConnection } = require("mysql");
 const socketIo = require("socket.io");
 const bodyParser = require("body-parser");
-var mysql = require("mysql");
-const connection = require("./db/db");
+// var mysql = require("mysql");
+// const connection = require("./db/db");
 const cron = require("node-cron");
 const axios = require("axios");
 const path = require("path");
@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
 
     var time = new Array();
     var id = msg.user_id;
-    const options = { timeZone: "Asia/Dhaka", timeZoneName: "short" };
+    // const options = { timeZone: "Asia/Dhaka", timeZoneName: "short" };
     const socket_notifier = async () => {
       try {
         const result = await axios.get(
