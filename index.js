@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
         );
         const results = result.data.data;
         // let results = response.data.data;
-        console.log(results)
+        // console.log(results)
         for (let i = 0; i < results.length; i++) {
           var date = new Date(results[i].start);
           var today = new Date();
@@ -66,8 +66,8 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          console.log(today_date);
-          console.log(date_from_db);
+          console.log("current date",today_date);
+          console.log("db date",date_from_db);
           if (today_date == date_from_db) {
             console.log("here")
             if (
