@@ -1,10 +1,10 @@
 const express = require("express");
 const http = require("http");
-// const { createConnection } = require("mysql");
+const { createConnection } = require("mysql");
 const socketIo = require("socket.io");
 const bodyParser = require("body-parser");
 // var mysql = require("mysql");
-// const connection = require("./db/db");
+const connection = require("./db/db");
 const cron = require("node-cron");
 const axios = require("axios");
 const path = require("path");
@@ -43,14 +43,16 @@ io.on("connection", (socket) => {
     var time = new Array();
     var id = msg.user_id;
     // const options = { timeZone: "Asia/Dhaka", timeZoneName: "short" };
-    const socket_notifier = async () => {
-      try {
-        const result = await axios(
-          `https://crmuser.quadque.digital/api/user-details-socket/${id}`
-        );
-        const results = result.data.data;
-        // let results = response.data.data;
-        // console.log(results)
+    const socket_notifier = (req, res) => {
+      // try {
+      console.log("hello");
+      // const result = await axios(
+      //   `https://crmuser.quadque.digital/api/user-details-socket/${id}`
+      // );
+      const sql =
+        "select * from follow_ups where user_id=? and status=? and delete_status=?";
+      connection.query(sql, [id, 1, 1], (err, results) => {
+        // console.log(JSON.stringify(results));
         for (let i = 0; i < results.length; i++) {
           var date = new Date(results[i].start);
           var today = new Date();
@@ -66,10 +68,10 @@ io.on("connection", (socket) => {
             (date.getMonth() + 1) +
             "-" +
             date.getDate();
-          console.log("current date",today_date);
-          console.log("db date",date_from_db);
+          console.log("current date", today_date);
+          console.log("db date", date_from_db);
           if (today_date == date_from_db) {
-            console.log("here")
+            console.log("here");
             if (
               new Date(results[i].start) >= new Date() &&
               new Date(results[i].start).setMinutes(
@@ -82,10 +84,7 @@ io.on("connection", (socket) => {
           }
         }
         io.emit("message", time);
-      } catch (error) {
-        console.log(error);
-      }
-      // });
+      });
     };
     socket_notifier();
   });

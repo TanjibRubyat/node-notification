@@ -3,8 +3,9 @@ var mysql = require("mysql");
 var conn = mysql.createConnection({
   host: "localhost",
   user: "root",
+  //   password: "Quadque*2022Tech",
   password: "Quadque*2022Tech",
-  database: "crm_notification",
+  database: "follow_ups",
 });
 
 conn.connect((err) => {
