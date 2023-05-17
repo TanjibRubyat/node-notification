@@ -90,6 +90,8 @@ io.on("connection", (socket) => {
   });
 });
 
+app.use("/api", router);
+
 //////////////////////////// socket.io notification end//////////////////////////
 
 server.listen(5000, () => {
