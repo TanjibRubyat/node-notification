@@ -3,8 +3,7 @@ var mysql = require("mysql");
 var conn = mysql.createConnection({
   host: "localhost",
   user: "root",
-  // password: "",
-  password: "Quadque*2022Tech",
+  password: process.env.DB_PASSWORD,
   database: "crm_notification",
 });
 
